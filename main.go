@@ -13,6 +13,15 @@ func main() {
 		scanner.Scan()
 		text := scanner.Text()
 		input := cleanInput(text)
-		fmt.Println("Your command was:", input[0])
+
+		command, exist := getCommands()[input[0]]
+		if exist {
+			err := command.callback()
+			if err != nil {
+				fmt.Println(err)
+			}
+		} else {
+			fmt.Println("Unknown command")
+		}
 	}
 }
