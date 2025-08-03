@@ -9,6 +9,16 @@ import (
 
 func (p *pokeAPI) GetLocationAreas(page int) ([]LocationArea, error){
 	url := fmt.Sprintf("%s%s?offset=%v", p.BaseURL, locationAreaPath, 20 * page)
+	
+	cacheVal, exist := p.cache.Get(url)
+	if exist {
+		var body GetLocationAreaResponse
+		if err := json.Unmarshal(cacheVal, &body); err != nil {
+			return nil, err
+		}
+
+		return body.Results, nil
+	}
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -33,6 +43,8 @@ func (p *pokeAPI) GetLocationAreas(page int) ([]LocationArea, error){
 	if err != nil {
 		return nil, err
 	}
+
+	p.cache.Add(url, data)
 
 	var body GetLocationAreaResponse
 	err = json.Unmarshal(data, &body)
