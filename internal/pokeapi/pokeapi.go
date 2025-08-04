@@ -11,6 +11,7 @@ type pokeAPI struct {
 	httpClient http.Client
 	BaseURL string
 	LocationAreaPage int
+	LocationAreaName string
 	cache pokecache.Cache
 }
 

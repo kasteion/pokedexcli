@@ -12,7 +12,7 @@ func (p *pokeAPI) GetLocationAreas(page int) ([]LocationArea, error){
 	
 	cacheVal, exist := p.cache.Get(url)
 	if exist {
-		var body GetLocationAreaResponse
+		var body GetLocationAreasResponse
 		if err := json.Unmarshal(cacheVal, &body); err != nil {
 			return nil, err
 		}
@@ -46,7 +46,7 @@ func (p *pokeAPI) GetLocationAreas(page int) ([]LocationArea, error){
 
 	p.cache.Add(url, data)
 
-	var body GetLocationAreaResponse
+	var body GetLocationAreasResponse
 	err = json.Unmarshal(data, &body)
 	if err != nil {
 		return nil, err
