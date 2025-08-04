@@ -12,7 +12,9 @@ type pokeAPI struct {
 	BaseURL string
 	LocationAreaPage int
 	LocationAreaName string
+	PokemonName string
 	cache pokecache.Cache
+	Pokedex Pokedex
 }
 
 var client *pokeAPI
@@ -26,6 +28,7 @@ func GetPokeAPIClient() *pokeAPI {
 			BaseURL: pokeApiBaseURL, 
 			LocationAreaPage: -1,
 			cache: pokecache.NewCache(5 * time.Minute),
+			Pokedex: newPokedex(),
 		}
 	}
 	return client

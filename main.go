@@ -18,9 +18,13 @@ func main() {
 
 		command, exist := getCommands()[input[0]]
 		if exist {
-			if command.name == "explore" {
+			switch command.name {
+			case "explore":
 				pokeapi.GetPokeAPIClient().LocationAreaName = input[1]
+			case "catch":
+				pokeapi.GetPokeAPIClient().PokemonName = input[1]
 			}
+
 
 			err := command.callback()
 			if err != nil {
