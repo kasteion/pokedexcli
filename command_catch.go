@@ -24,5 +24,6 @@ func commandCatch() error {
 
 	api.Pokedex.Add(api.PokemonName, pokemon)
 	fmt.Printf("%s was caught!\n", api.PokemonName)
+	fmt.Println("You may now inspect it with the inspect command.")
 	return nil
 }

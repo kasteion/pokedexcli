@@ -1,6 +1,8 @@
 package pokeapi
 
-import "sync"
+import (
+	"sync"
+)
 
 type Pokedex struct {
 	pokemons map[string]Pokemon
@@ -27,4 +29,18 @@ func (p *Pokedex) Get(key string) (Pokemon, bool) {
 	defer p.mu.Unlock()
 	pokemon, ok := p.pokemons[key]
 	return pokemon, ok
+}
+
+func (p *Pokedex) GetPokemonsChannel() (chan Pokemon, int) {
+	ch := make(chan Pokemon)
+
+	go func() {
+		p.mu.Lock()
+		for _, pokemon := range(p.pokemons) {
+			ch <- pokemon
+		}
+		defer p.mu.Unlock()
+	}()
+	
+	return ch, len(p.pokemons)
 }
