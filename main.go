@@ -22,6 +22,8 @@ func main() {
 			case "explore":
 				pokeapi.GetPokeAPIClient().LocationAreaName = input[1]
 			case "catch":
+				fallthrough	
+			case "inspect":
 				pokeapi.GetPokeAPIClient().PokemonName = input[1]
 			}
 

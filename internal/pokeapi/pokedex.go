@@ -21,3 +21,10 @@ func (p *Pokedex) Add(key string, pokemon Pokemon) {
 	defer p.mu.Unlock()
 	p.pokemons[key] = pokemon
 }
+
+func (p *Pokedex) Get(key string) (Pokemon, bool) {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	pokemon, ok := p.pokemons[key]
+	return pokemon, ok
+}
